@@ -35,6 +35,7 @@ struct node* get_struct(void)
 	{
 		printf("Memory allocation error\n");
 		exit(1);
+
 	}
 
 	printf("object name: \n");   // вводим данные
