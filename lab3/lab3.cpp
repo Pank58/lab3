@@ -72,8 +72,8 @@ int spstore()
 	}
 	else if (head != NULL && p != NULL) // список уже есть, то вставляем в конец 
 	{
-		last->next = p;
-		last = p;
+		p->next=head;
+		head = p;
 	}
 	printf("next? (+ or -)\n");
 	scanf(" %c", &specchar);
