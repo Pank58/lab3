@@ -9,7 +9,7 @@
 struct node
 {
 	char inf[256];  // полезная информация
-	int prior;
+	/*int prior;*/
 	struct node* next; // ссылка на следующий элемент 
 };
 struct node* head = NULL, * last = NULL, * f = NULL; // указатели на первый и последний элементы списка
@@ -48,11 +48,11 @@ struct node* get_struct(void)
 	}
 	strcpy(p->inf, s);
 
-	printf("object priority: \n");   // вводим данные
-	scanf("%d", &num);
-	fflush(stdin);
+	//printf("object priority: \n");   // вводим данные
+	//scanf("%d", &num);
+	//fflush(stdin);
 
-	p->prior = num;
+	//p->prior = num;
 
 	p->next = NULL;
 	
@@ -63,44 +63,17 @@ struct node* get_struct(void)
 int spstore()
 {
 	struct node* p = NULL;
-	struct node* x = NULL;
-	struct node* n = NULL;
 	struct node* struc = head;
 	p = get_struct();
-	fflush(stdin);
 	if (head == NULL && p != NULL)	// если списка нет, то устанавливаем голову списка
 	{
 		head = p;
-		
+		last = p;
 	}
 	else if (head != NULL && p != NULL) // список уже есть, то вставляем в конец 
 	{
-		while (struc)
-		{
-			n = struc->next;
-			if((struc->prior < p->prior)&&(n == NULL)){
-				struc->next = p;
-				last = p;
-				break;
-			}
-			else if ((struc->prior > p->prior)) {
-				p->next = struc;
-				if (x!=NULL) 
-				{
-					x->next = p;
-				}
-				if (struc == head) {
-					head = p;
-				}
-				
-				break;
-			}
-			else if((struc->prior <= p->prior)){
-				x = struc;
-				struc = struc->next;
-			}
-			
-		}
+		last->next = p;
+		last = p;
 	}
 	printf("next? (+ or -)\n");
 	scanf(" %c", &specchar);
@@ -127,7 +100,7 @@ void review(void)
 	}
 	while (struc)
 	{
-		printf("name - %s, priority - %d \n", struc->inf, struc->prior);
+		printf("name - %s\n", struc->inf);
 		struc = struc->next;
 	}
 	return;
@@ -154,10 +127,10 @@ struct node* find(char* name)
 }
 
 /* Удаление элемента по содержимому. */
-void del(char* name)
+void del()
 {
 	struct node* struc = head; // указатель, проходящий по списку установлен на начало списка
-	struct node* prev=NULL;// указатель на предшествующий удаляемому элемент
+	struct node* prev=NULL;
 	int flag = 0;      // индикатор отсутствия удаляемого элемента в списке
 
 	if (head == NULL) // если голова списка равна NULL, то список пуст
@@ -166,50 +139,9 @@ void del(char* name)
 		return;
 	}
 
-	if (strcmp(name, struc->inf) == 0) // если удаляемый элемент - первый
-	{
-		flag = 1;
-		head = struc->next; // установливаем голову на следующий элемент
-		free(struc);  // удаляем первый элемент
-		struc = head; // устанавливаем указатель для продолжения поиска
-	}
-	else
-	{
-		prev = struc;
-		struc = struc->next;
-	}
-
-	while (struc) // проход по списку и поиск удаляемого элемента
-	{
-		if (strcmp(name, struc->inf) == 0) // если нашли, то
-		{
-			flag = 1;         // выставляем индикатор
-			if (struc->next)  // если найденный элемент не последний в списке
-			{
-				prev->next = struc->next; // меняем указатели
-				free(struc);		    // удаляем  элемент
-				struc = prev->next; // устанавливаем указатель для продолжения поиска
-			}
-			else			// если найденный элемент последний в списке
-			{
-				prev->next = NULL; // обнуляем указатель предшествующего элемента
-				free(struc);	// удаляем  элемент
-				return;
-			}
-		}
-		else // если не нашли, то
-		{
-			prev = struc; // устанавливаем указатели для продолжения поиска
-			struc = struc->next;
-		}
-	}
-
-	if (flag == 0)				// если флаг = 0, значит нужный элемент не найден
-	{
-		printf("Элемент не найден\n");
-		return;
-	}
-
+	prev = struc->next;
+	head = prev;
+	free(struc);
 
 }
 
@@ -220,6 +152,9 @@ int main(){
 	while (g==1) {
 		g=spstore();
 	}
+	review();
+	del();
+	printf("Delet objekt\n");
 	review();
 
 }
