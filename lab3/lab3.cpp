@@ -71,7 +71,7 @@ int spstore()
 	if (head == NULL && p != NULL)	// если списка нет, то устанавливаем голову списка
 	{
 		head = p;
-		
+		last = p;
 	}
 	else if (head != NULL && p != NULL) // список уже есть, то вставляем в конец 
 	{
