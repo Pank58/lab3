@@ -154,7 +154,7 @@ int main(){
 	}
 	review();
 	del();
-	printf("Delet objekt\n");
+	printf("\nDelet objekt\n\n");
 	review();
 
 }
